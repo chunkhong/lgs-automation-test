@@ -42,7 +42,7 @@ public class HATVTest extends TestBase{
 		Assert.assertTrue(hatvPage.getPageheader().contains("HATV Metrics"));
 		Thread.sleep(4000);
 		filtersPane.fillInAffNo("070");
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		filtersPane.fillInABONo("2007120");
 		Thread.sleep(3000);
 		hatvPage.scrollToElement("Volume Fluc");
@@ -62,7 +62,7 @@ public class HATVTest extends TestBase{
 		Assert.assertTrue(hatvPage.getPageheader().contains("HATV Metrics"));
 		Thread.sleep(4000);
 		filtersPane.fillInAffNo("100");
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		filtersPane.fillInABONo("7289922");
 		Thread.sleep(3000);
 		hatvPage.clickPerfYrFilter();

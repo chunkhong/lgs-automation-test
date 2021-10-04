@@ -44,6 +44,18 @@ public class ABOCountTest extends TestBase{
 		Assert.assertTrue(countPage.getGroupSizeTitle().contains("Group Size"));
 		Assert.assertTrue(countPage.groupSizeChartDisplay());
 		Assert.assertTrue(countPage.groupSizePivotTableDisplay());
+		countPage.scrollToElement("Sponsoring");
+		Assert.assertTrue(countPage.getsponsoringTitle().contains("Sponsoring"));
+		Assert.assertTrue(countPage.sponsoringChartDisplay());
+		Assert.assertTrue(countPage.sponsoringPivotTableDisplay());
+		countPage.scrollToElement("Contributors");
+		Assert.assertTrue(countPage.getContributorsTitle().contains("Contributors"));
+		Assert.assertTrue(countPage.contributorsChartDisplay());
+		Assert.assertTrue(countPage.contributorsPivotTableDisplay());
+		countPage.scrollToElement("Contributing ABO");
+		Assert.assertTrue(countPage.getContributingAboTitle().contains("Contributing ABO Percentage"));
+		Assert.assertTrue(countPage.contributingAboChartDisplay());
+		Assert.assertTrue(countPage.contributingAboPivotTableDisplay());
 		Thread.sleep(4000);
 	}
 	
