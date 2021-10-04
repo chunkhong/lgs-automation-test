@@ -13,11 +13,21 @@ public class HATVMetricsPage extends TestBase{
 	@FindBy(css="visual-container-repeat visual-container:nth-of-type(4) visual-modern .textRun")
 	WebElement pageHeader;
 	
+	@FindBy(css="div[tab-order=\"76000\"] i")
+	WebElement perfYrFilter;
+	
+	@FindBy(css="div[aria-label=\"PF 2021\"]")
+	WebElement Yr2021Option;
+	
 	@FindBy(css="div[title=\"Volume Fluctuation\"]")
 	WebElement volumeFlucTitle;
 	
 	@FindBy(css="div[tab-order=\"81000\"] .cartesianChart")
 	WebElement volumeFlucChart;
+	
+	@FindBy(css="div[tab-order=\"81000\"] .labelGraphicsContext text:nth-of-type(12)")
+	WebElement volumeFlucMonthlyValue;
+	
 	
 	//Initializing Page Objects
 	public HATVMetricsPage() {
@@ -29,11 +39,19 @@ public class HATVMetricsPage extends TestBase{
 		return pageHeader.getText();
 	}
 	
-	public void scrollToTitle(String title) {
+	public void clickPerfYrFilter() {
+		perfYrFilter.click();
+	}
+	
+	public void clickYr2021Option() {
+		Yr2021Option.click();
+	}
+	
+	public void scrollToElement(String title) {
 		if (title == "Volume Fluc") {
 			// Actions class with moveToElement()
 		    Actions a = new Actions(driver);
-		    a.moveToElement(volumeFlucTitle);
+		    a.moveToElement(volumeFlucChart);
 		    a.perform();
 		}
 	}
@@ -46,4 +64,7 @@ public class HATVMetricsPage extends TestBase{
 		return volumeFlucChart.isDisplayed();
 	}
 	
+	public String volumeFlucMonthlyValue() {
+		return volumeFlucMonthlyValue.getText();
+	}
 }

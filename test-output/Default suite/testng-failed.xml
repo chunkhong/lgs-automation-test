@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="lgs.portal.testcases.LgsHATVTest">
+      <class name="lgs.analytics.testcases.HATVTest">
         <methods>
-          <include name="GoToUnassignedCasesTab"/>
+          <include name="validateVolumeFlucMonthlyValue"/>
           <include name="setUp"/>
           <include name="endTest"/>
         </methods>
-      </class> <!-- lgs.portal.testcases.LgsHATVTest -->
+      </class> <!-- lgs.analytics.testcases.HATVTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

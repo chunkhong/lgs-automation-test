@@ -16,6 +16,9 @@ public class PBIAnalyticsHomePage extends TestBase{
 	@FindBy(css="app-consumption-navigation-pane h4")
 	WebElement pageHeader;
 	
+	@FindBy(css="span[title=\"Count\"]")
+	WebElement countTab;
+	
 	@FindBy(css="span[title=\"HATV\"]")
 	WebElement hatvTab;
 	
@@ -31,6 +34,10 @@ public class PBIAnalyticsHomePage extends TestBase{
 	
 	public String getPageheader() {
 		return pageHeader.getText();
+	}
+	
+	public void clickCountTab(){
+		countTab.click();
 	}
 	
 	public HATVMetricsPage clickHATVTab() throws InterruptedException {
