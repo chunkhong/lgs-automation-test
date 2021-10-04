@@ -45,9 +45,31 @@ public class HATVTest extends TestBase{
 		Thread.sleep(3000);
 		filtersPane.fillInABONo("2007120");
 		Thread.sleep(3000);
-		hatvPage.scrollToTitle("Volume Fluc");
+		hatvPage.scrollToElement("Volume Fluc");
 		Assert.assertTrue(hatvPage.volumeFlucTitleDisplay());
 		Assert.assertTrue(hatvPage.volumeFlucChartDisplay());
+		Thread.sleep(3000);
+	}
+	
+	@Test
+	public void validateVolumeFlucMonthlyValue() throws InterruptedException {
+		homePage.loginPBI();
+		analyticsHomePage.clickprodImage();
+		Assert.assertTrue(analyticsHomePage.getPageheader().contains("Sales Support@CMP"));
+		Thread.sleep(15000);
+		analyticsHomePage.clickHATVTab();
+		Thread.sleep(4000);
+		Assert.assertTrue(hatvPage.getPageheader().contains("HATV Metrics"));
+		Thread.sleep(4000);
+		filtersPane.fillInAffNo("100");
+		Thread.sleep(3000);
+		filtersPane.fillInABONo("7289922");
+		Thread.sleep(3000);
+		hatvPage.clickPerfYrFilter();
+		hatvPage.clickYr2021Option();
+		Thread.sleep(5000);
+		hatvPage.scrollToElement("Volume Fluc");
+		Assert.assertEquals(hatvPage.volumeFlucMonthlyValue(), "25,162");
 		Thread.sleep(3000);
 	}
 	

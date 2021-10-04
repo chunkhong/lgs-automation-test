@@ -35,6 +35,7 @@ public class LgsHATVTest extends LgsTestBase{
 		ssoPage.enterNativeId();
 		ssoPage.enterPasword();
 		ssoPage.clickSubmit();
+		Thread.sleep(3000);
 		lgsHomePage.clickHATVCasesLink();
 		Thread.sleep(3000);
 		Assert.assertTrue(hatvCasesPage.getPageHeader().contains("HATV Cases"));

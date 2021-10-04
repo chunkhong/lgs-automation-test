@@ -11,6 +11,9 @@ public class FiltersPane extends TestBase{
 		@FindBy(css="filter-pane-modern #exploreFilterContainer filter .filterCardTitleSection button:nth-of-type(1)")
 		WebElement accSnapshotAff_Id_Filter;
 		
+		@FindBy(css="exploration outspace-pane filter-pane-modern #exploreFilterContainer filter .cardHeader button:nth-of-type(1)")
+		WebElement accAccountAff_Id_Imc_No_Filter;
+		
 		@FindBy(css="filter-pane-modern #exploreFilterContainer filter .filterContent .filterTypeSelection mat-select")
 		WebElement filterType;
 		
@@ -60,6 +63,10 @@ public class FiltersPane extends TestBase{
 		
 		public void clickAccSnapshot_Aff_Id_Filter(){
 			accSnapshotAff_Id_Filter.click();
+		}
+		
+		public void clickAccCount_Aff_Id_Filter(){
+			accAccountAff_Id_Imc_No_Filter.click();
 		}
 		
 		public void clickFilterType(){
@@ -121,4 +128,13 @@ public class FiltersPane extends TestBase{
 			clickImcNoApplyFilterBtn();
 		}
 		
+		public void fillInAffNoImcNo(String affId) {
+			clickAccCount_Aff_Id_Filter();
+			clickFilterType();
+			selectFilterTypeOption1();
+			clickShowItemValue();
+			selectShowItemValueOption5();
+			enterABOno(affId);
+			clickApplyFilterBtn();
+		}
 }
