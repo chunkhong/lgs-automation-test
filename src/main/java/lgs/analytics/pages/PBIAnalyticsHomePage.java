@@ -19,6 +19,12 @@ public class PBIAnalyticsHomePage extends TestBase{
 	@FindBy(css="span[title=\"Count\"]")
 	WebElement countTab;
 	
+	@FindBy(css="span[title=\"Productivity\"]")
+	WebElement productivityTab;
+	
+	@FindBy(css="span[title=\"Income\"]")
+	WebElement incomeTab;
+	
 	@FindBy(css="span[title=\"HATV\"]")
 	WebElement hatvTab;
 	
@@ -38,6 +44,14 @@ public class PBIAnalyticsHomePage extends TestBase{
 	
 	public void clickCountTab(){
 		countTab.click();
+	}
+	
+	public void clickProductivityTab(){
+		productivityTab.click();
+	}
+	
+	public void clickIncomeTab(){
+		incomeTab.click();
 	}
 	
 	public HATVMetricsPage clickHATVTab() throws InterruptedException {

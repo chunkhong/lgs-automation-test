@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="lgs.analytics.testcases.HATVTest">
+      <class name="lgs.analytics.testcases.ABOAccountDashboardTest">
         <methods>
-          <include name="validateVolumeFlucMonthlyValue"/>
-          <include name="setUp"/>
+          <include name="ValidateIncomePage"/>
           <include name="endTest"/>
+          <include name="setUp"/>
         </methods>
-      </class> <!-- lgs.analytics.testcases.HATVTest -->
+      </class> <!-- lgs.analytics.testcases.ABOAccountDashboardTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
