@@ -32,7 +32,7 @@ public class ABOCountTest extends TestBase{
 	}
 	
 	@Test
-	public void validateGroupSize() throws InterruptedException {
+	public void validateABOCountPage() throws InterruptedException {
 		homePage.loginPBI();
 		analyticsHomePage.clickprodImage();
 		Assert.assertTrue(analyticsHomePage.getPageheader().contains("Sales Support@CMP"));
@@ -40,6 +40,10 @@ public class ABOCountTest extends TestBase{
 		analyticsHomePage.clickCountTab();
 		Thread.sleep(4000);
 		Assert.assertTrue(countPage.getPageheader().contains("ABO Counts"));
+		countPage.clickPrfYrFilter();
+		countPage.select2020PrfYr();
+		countPage.clicLosFilter();
+		countPage.selectPlatinumGroup();
 		filtersPane.fillInAffNoImcNo("0702007120");
 		Assert.assertTrue(countPage.getGroupSizeTitle().contains("Group Size"));
 		Assert.assertTrue(countPage.groupSizeChartDisplay());
@@ -56,6 +60,18 @@ public class ABOCountTest extends TestBase{
 		Assert.assertTrue(countPage.getContributingAboTitle().contains("Contributing ABO Percentage"));
 		Assert.assertTrue(countPage.contributingAboChartDisplay());
 		Assert.assertTrue(countPage.contributingAboPivotTableDisplay());
+		countPage.scrollToElement("Contributing ABO");
+		Assert.assertTrue(countPage.get90DaysTitle().contains("90 Day Activation"));
+		Assert.assertTrue(countPage._90DaysChartDisplay());
+		Assert.assertTrue(countPage._90DaysPivotTableDisplay());
+		countPage.scrollToElement("Cust / Member");
+		Assert.assertTrue(countPage.getcustMemberTitle().contains("Customer / Member Count"));
+		Assert.assertTrue(countPage.custMemberChartDisplay());
+		Assert.assertTrue(countPage.custMemberPivotTableDisplay());
+		countPage.scrollToElement("Average Number");
+		Assert.assertTrue(countPage.getAvgNumberTitle().contains("Average Number of Customers / Members per Contributor"));
+		Assert.assertTrue(countPage.avgNumberChartDisplay());
+		Assert.assertTrue(countPage.avgNumberPivotTableDisplay());
 		Thread.sleep(4000);
 	}
 	
