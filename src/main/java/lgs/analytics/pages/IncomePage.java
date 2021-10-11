@@ -35,6 +35,24 @@ public class IncomePage extends TestBase{
 	@FindBy(css="div[tab-order=\"11000\"] .bodyCells")
 	WebElement incomeBreakdownPivotTable;
 	
+	@FindBy(css="div[title=\"Personal Income Comparison\"]")
+	WebElement incomeComparisonTitle;
+	
+	@FindBy(css="div[tab-order=\"57000\"] .cartesianChart")
+	WebElement incomeComparisonChart;
+	
+	@FindBy(css="div[tab-order=\"58000\"] .bodyCells")
+	WebElement incomeComparisonPivotTable;
+	
+	@FindBy(css="div[title=\"ABO Group Income Analytics\"]")
+	WebElement incomeAnalyticsTitle;
+	
+	@FindBy(css="div[tab-order=\"64000\"] .cartesianChart")
+	WebElement incomeAnalyticsChart;
+	
+	@FindBy(css="div[tab-order=\"65000\"] .bodyCells")
+	WebElement incomeAnalyticsPivotTable;
+	
 	//Initializing Page Objects
 	public IncomePage() {
 		PageFactory.initElements(driver, this);
@@ -51,6 +69,16 @@ public class IncomePage extends TestBase{
 			// Actions class with moveToElement()
 		    Actions a = new Actions(driver);
 		    a.moveToElement(incomeBreakdownPivotTable);
+		    a.perform();
+		}else if (title == "Income Comparison") {
+			// Actions class with moveToElement()
+		    Actions a = new Actions(driver);
+		    a.moveToElement(incomeComparisonChart);
+		    a.perform();
+		}else if (title == "Income Analytics") {
+			// Actions class with moveToElement()
+		    Actions a = new Actions(driver);
+		    a.moveToElement(incomeAnalyticsChart);
 		    a.perform();
 		}
 	}
@@ -88,5 +116,29 @@ public class IncomePage extends TestBase{
 	
 	public Boolean incomeBreakdownPivotTableDisplay() {
 		return incomeBreakdownPivotTable.isDisplayed();
+	}
+	
+	public String getImcomeComparisonTitle() {
+		return incomeComparisonTitle.getText();
+	}
+	
+	public Boolean incomeComparisonChartDisplay() {
+		return incomeComparisonChart.isDisplayed();
+	}
+	
+	public Boolean incomeComparisonPivotTableDisplay() {
+		return incomeComparisonPivotTable.isDisplayed();
+	}
+	
+	public String getImcomeAnalyticsTitle() {
+		return incomeAnalyticsTitle.getText();
+	}
+	
+	public Boolean incomeAnalyticsChartDisplay() {
+		return incomeAnalyticsChart.isDisplayed();
+	}
+	
+	public Boolean incomeAnalyticsPivotTableDisplay() {
+		return incomeAnalyticsPivotTable.isDisplayed();
 	}
 }

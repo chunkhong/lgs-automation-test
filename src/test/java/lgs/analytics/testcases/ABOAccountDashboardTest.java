@@ -1,9 +1,15 @@
 package lgs.analytics.testcases;
 
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import lgs.analytics.base.TestBase;
 import lgs.analytics.pages.AccountSnapshotPage;
@@ -15,6 +21,9 @@ import lgs.analytics.pages.PowerBIHomePage;
 import lgs.analytics.pages.ProductivityPage;
 
 public class ABOAccountDashboardTest extends TestBase{
+	ExtentTest logger;
+	ExtentReports extent;
+	
 	PowerBIHomePage homePage;
 	PBIAnalyticsHomePage analyticsHomePage;
 	AccountSnapshotPage accSnapshotPage;
@@ -84,6 +93,17 @@ public class ABOAccountDashboardTest extends TestBase{
 		countPage = new CountPage();
 		productivityPage = new ProductivityPage();
 		incomePage = new IncomePage();
+	}
+	
+	@BeforeTest
+	public void setUpExtentReport() {
+		//start reporters
+		ExtentSparkReporter spark = new ExtentSparkReporter("extent.html");
+		
+		ExtentReports extent = new ExtentReports();
+		extent.attachReporter(spark);
+		
+		logger = extent.createTest("MyTestSuite", "My Report");
 	}
 	
 	@Test
@@ -172,11 +192,28 @@ public class ABOAccountDashboardTest extends TestBase{
 		incomePage.scrollToElement("Icome Breakdown");
 		Assert.assertTrue(incomePage.getIncomeBreakdownTitle().contains("Core vs. Incentive Income Breakdown"));
 		Assert.assertTrue(incomePage.incomeBreakdownPivotTableDisplay());
+		incomePage.scrollToElement("Income Comparison");
+		Assert.assertTrue(incomePage.getImcomeComparisonTitle().contains("Personal Income Comparison"));
+		Assert.assertTrue(incomePage.incomeComparisonChartDisplay());
+		Assert.assertTrue(incomePage.incomeComparisonPivotTableDisplay());
+		incomePage.scrollToElement("Income Analytics");
+		Assert.assertTrue(incomePage.getImcomeAnalyticsTitle().contains("ABO Group Income Analytics"));
+		Assert.assertTrue(incomePage.incomeAnalyticsChartDisplay());
+		Assert.assertTrue(incomePage.incomeAnalyticsPivotTableDisplay());
 		Thread.sleep(4000);
 	}
 	
 	@AfterMethod
-	public void endTest() {
+	public void endTest(ITestResult result) {
 		driver.quit();
+		
+		if(result.getStatus()==ITestResult.FAILURE)
+		{
+			logger.fail(result.getThrowable().getMessage());
+		}else {
+			logger.pass("Passed");
+		}
+		
+		extent.flush();
 	}
 }

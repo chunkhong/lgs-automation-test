@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="lgs.analytics.testcases.ABOAccountDashboardTest">
+      <class name="lgs.extentreports.test.AttachScreenshotTest">
         <methods>
-          <include name="ValidateIncomePage"/>
-          <include name="endTest"/>
+          <include name="tearDown"/>
+          <include name="attachScreenShot"/>
           <include name="setUp"/>
         </methods>
-      </class> <!-- lgs.analytics.testcases.ABOAccountDashboardTest -->
+      </class> <!-- lgs.extentreports.test.AttachScreenshotTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
