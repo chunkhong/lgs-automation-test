@@ -3,12 +3,14 @@ package lgs.analytics.testcases;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import lgs.analytics.base.TestBase;
@@ -19,11 +21,9 @@ import lgs.analytics.pages.IncomePage;
 import lgs.analytics.pages.PBIAnalyticsHomePage;
 import lgs.analytics.pages.PowerBIHomePage;
 import lgs.analytics.pages.ProductivityPage;
+import lgs.analytics.utility.Asserts;
 
 public class ABOAccountDashboardTest extends TestBase{
-	ExtentTest logger;
-	ExtentReports extent;
-	
 	PowerBIHomePage homePage;
 	PBIAnalyticsHomePage analyticsHomePage;
 	AccountSnapshotPage accSnapshotPage;
@@ -32,13 +32,29 @@ public class ABOAccountDashboardTest extends TestBase{
 	ProductivityPage productivityPage;
 	IncomePage incomePage;
 	
+	Asserts asserts;
+	boolean status = false;
+
+	//create the htmlReporter object
+	ExtentSparkReporter htmlReporter;
+	ExtentReports extent;
+	ExtentTest test1,test2,test3;
+	
 	public ABOAccountDashboardTest() {
 		super();
 	}
 	
-	public void ABO_Counts_KPIs_Display() {
-		Assert.assertTrue(accSnapshotPage.getABOCountTitle().contains("ABO Counts"));
-		Assert.assertTrue(accSnapshotPage.getGroupSizeTitle().contains("Group Size"));
+	public boolean ABO_Counts_KPIs_Display() {
+		status = asserts.TextEqual(accSnapshotPage.getABOCountTitle(), "ABO Counts");
+		if (status == false) {
+			test2.fail("ABO Count Page title Not Found !!!");
+			Assert.assertTrue(status);
+		}
+		status = asserts.TextEqual(accSnapshotPage.getGroupSizeTitle(), "Group Size");
+		if (status == false) {
+			test2.fail("Group Size header Not Found !!!");
+			Assert.assertTrue(status);
+		}
 		Assert.assertTrue(accSnapshotPage.getGroupSizeAmount().length() > 0);
 		Assert.assertTrue(accSnapshotPage.getGroupSizePerct().length() > 0);
 		Assert.assertTrue(accSnapshotPage.getSponsoringTitle().contains("Sponsoring"));
@@ -53,6 +69,7 @@ public class ABOAccountDashboardTest extends TestBase{
 		Assert.assertTrue(accSnapshotPage.getPlatinumAndAboveTitle().contains("Platinum and Above Count"));
 		Assert.assertTrue(accSnapshotPage.getPlatinumAndAboveValue().length() > 0);
 		Assert.assertTrue(accSnapshotPage.getPlatinumAndAbovePerct().length() > 0);
+		return status;
 	}
 	
 	public void Productivity_KPIs_Display() {
@@ -83,6 +100,14 @@ public class ABOAccountDashboardTest extends TestBase{
 		Assert.assertTrue(accSnapshotPage.getTotalYrRenewalRatesPerct().length() > 0);
 	}
 	
+	@BeforeSuite
+	public void setUpExtentReport() {
+		htmlReporter = new ExtentSparkReporter("analyticsextentReport.html");
+		//create ExtentReports and attach reporter(s)
+		extent = new ExtentReports();
+		extent.attachReporter(htmlReporter);
+	}
+	
 	@BeforeMethod
 	public void setUp() {
 		initialization();
@@ -93,26 +118,22 @@ public class ABOAccountDashboardTest extends TestBase{
 		countPage = new CountPage();
 		productivityPage = new ProductivityPage();
 		incomePage = new IncomePage();
-	}
-	
-	@BeforeTest
-	public void setUpExtentReport() {
-		//start reporters
-		ExtentSparkReporter spark = new ExtentSparkReporter("extent.html");
-		
-		ExtentReports extent = new ExtentReports();
-		extent.attachReporter(spark);
-		
-		logger = extent.createTest("MyTestSuite", "My Report");
+		asserts = new Asserts();
 	}
 	
 	@Test
 	public void ABO_AccountDashboard_KPIs_Display () throws InterruptedException {
+		//creates a toggle for the given test, add all log events under it
+		test2 = extent.createTest("Account Dashboard Test", "test to validate account snapshot page");
+		test2.log(Status.INFO, "Starting test case");
+		
 		homePage.loginPBI();
 		analyticsHomePage.clickprodImage();
-		Assert.assertTrue(analyticsHomePage.getPageheader().contains("Sales Support@CMP"));
+		status = asserts.TextEqual(analyticsHomePage.getPageheader(), "Sales Support@CMP");
+		test2.pass("Home Page Header Test Successfully");
 		Thread.sleep(15000);
-		Assert.assertTrue(accSnapshotPage.getPageHeader().contains("Account Snapshot"));
+		status = asserts.TextEqual(accSnapshotPage.getPageHeader(), "Account Snapshot");
+		test2.pass("Account Snapshot Header Test Successfully");
 		filtersPane.clickAccSnapshot_Aff_Id_Filter();
 		Thread.sleep(2000);
 		filtersPane.clickFilterType();
@@ -122,29 +143,45 @@ public class ABOAccountDashboardTest extends TestBase{
 		filtersPane.enterABOno("0702007120");
 		filtersPane.clickApplyFilterBtn();
 		Thread.sleep(5000);
-		ABO_Counts_KPIs_Display();
+		status = ABO_Counts_KPIs_Display();
+		test2.pass("ABO Count KPIs Test Successfully");
 		Productivity_KPIs_Display();
 		Renewal_Rates_KPIs_Display();
+		test2.pass("Account Snapshot Page Test Successfully");
 		Thread.sleep(3000);
+		if (status == false) {
+			test2.fail("Test is Failed");
+			Assert.assertTrue(status);
+		}
 	}
 	
 	@Test
 	public void ValidateProductivityPage() throws InterruptedException {
+		//creates a toggle for the given test, add all log events under it
+		test1 = extent.createTest("Productivity Page Test", "test to validate productivity page");
+		test1.log(Status.INFO, "Starting test case");
+		
 		homePage.loginPBI();
+		test1.pass("Login Successully");
 		analyticsHomePage.clickprodImage();
-		Assert.assertTrue(analyticsHomePage.getPageheader().contains("Sales Support@CMP"));
+		status = asserts.TextEqual(analyticsHomePage.getPageheader(), "Sales Support@CMP");
 		Thread.sleep(15000);
 		analyticsHomePage.clickProductivityTab();
 		Thread.sleep(4000);
-		Assert.assertTrue(productivityPage.getPageheader().contains("Productivity"));
+		status = asserts.TextEqual(productivityPage.getPageheader(), "Productivity");
+		test1.pass("Land to Productivity Page Successully");
 		filtersPane.fillInAffNoImcNo("0702007120");
+		Thread.sleep(3000);
 		productivityPage.clickPrfYrFilter();
 		productivityPage.select2020PrfYr();
+		Thread.sleep(3000);
 		productivityPage.clickCurrencyFilter();
 		productivityPage.selectLocalCurrency();
-		Assert.assertTrue(productivityPage.getRevenueTitle().contains("Revenue"));
+		Thread.sleep(3000);
+		status = asserts.TextEqual(productivityPage.getRevenueTitle(), "Revenue");
 		Assert.assertTrue(productivityPage.revenueChartDisplay());
 		Assert.assertTrue(productivityPage.revenuePivotTableDisplay());
+		test1.pass("Revenue KPIs Display Successully");
 		productivityPage.scrollToElement("Revenue Per ABO");
 		Assert.assertTrue(productivityPage.getRevenuePerABOTitle().contains("Revenue per Contributing ABO"));
 		Assert.assertTrue(productivityPage.revenuePerABOChartDisplay());
@@ -170,27 +207,40 @@ public class ABOAccountDashboardTest extends TestBase{
 		Assert.assertTrue(productivityPage.perctGSPVChartDisplay());
 		Assert.assertTrue(productivityPage.perctGSPVPivotTableDisplay());
 		Thread.sleep(4000);
+		if (status == false) {
+			test1.fail("Test is Failed");
+			Assert.assertTrue(status);
+		}
 	}
 	
 	@Test
 	public void ValidateIncomePage() throws InterruptedException {
+		//creates a toggle for the given test, add all log events under it
+		test3 = extent.createTest("Income Page Test", "test to validate income page");
+		test3.log(Status.INFO, "Starting test case");
+		
 		homePage.loginPBI();
 		analyticsHomePage.clickprodImage();
-		Assert.assertTrue(analyticsHomePage.getPageheader().contains("Sales Support@CMP"));
+		status = asserts.TextEqual(analyticsHomePage.getPageheader(), "Sales Support@CMP");
 		Thread.sleep(15000);
 		analyticsHomePage.clickIncomeTab();
 		Thread.sleep(4000);
-		Assert.assertTrue(incomePage.getPageheader().contains("Income"));
+		status = asserts.TextEqual(incomePage.getPageheader(), "Income");
 		filtersPane.fillInAffNoImcNo("1007289922");
 		Assert.assertTrue(incomePage.getIncomeAmtTitle().contains("Core vs. Incentive Income Amounts"));
 		Assert.assertTrue(incomePage.incomeAmtChartDisplay());
 		Assert.assertTrue(incomePage.incomeAmtPivotTableDisplay());
 		incomePage.scrollToElement("Total Bonus");
+		status = asserts.TextEqual(incomePage.getTotalBonusTitle(), "Income");
+		if (status == false) {
+			test3.fail("'" + incomePage.getTotalBonusTitle() + "' title Not equal expected Title 'Income'.");
+			//Assert.assertTrue(status);
+		}
 		Assert.assertTrue(incomePage.getTotalBonusTitle().contains("Top5 Bonuses received"));
 		Assert.assertTrue(incomePage.totalBonusChartDisplay());
 		Assert.assertTrue(incomePage.totalBonusPivotTableDisplay());
 		incomePage.scrollToElement("Icome Breakdown");
-		Assert.assertTrue(incomePage.getIncomeBreakdownTitle().contains("Core vs. Incentive Income Breakdown"));
+		status = asserts.TextEqual(incomePage.getIncomeBreakdownTitle(), "Core vs. Incentive Income Breakdown");
 		Assert.assertTrue(incomePage.incomeBreakdownPivotTableDisplay());
 		incomePage.scrollToElement("Income Comparison");
 		Assert.assertTrue(incomePage.getImcomeComparisonTitle().contains("Personal Income Comparison"));
@@ -201,19 +251,20 @@ public class ABOAccountDashboardTest extends TestBase{
 		Assert.assertTrue(incomePage.incomeAnalyticsChartDisplay());
 		Assert.assertTrue(incomePage.incomeAnalyticsPivotTableDisplay());
 		Thread.sleep(4000);
+		test3.pass("Test Passed Successfully");
+		if (status == false) {
+			test3.fail("Test is Failed");
+			Assert.assertTrue(status);
+		}
 	}
 	
 	@AfterMethod
 	public void endTest(ITestResult result) {
 		driver.quit();
-		
-		if(result.getStatus()==ITestResult.FAILURE)
-		{
-			logger.fail(result.getThrowable().getMessage());
-		}else {
-			logger.pass("Passed");
-		}
-		
+	}
+	
+	@AfterSuite
+	public void tearDown() {
 		extent.flush();
 	}
 }
