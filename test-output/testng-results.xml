@@ -2,23 +2,38 @@
 <testng-results ignored="2" total="3" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-10-06T11:04:05 SGT" name="Default suite" finished-at="2021-10-06T11:05:00 SGT" duration-ms="54185">
+  <suite started-at="2021-10-21T15:07:25 SGT" name="Default suite" finished-at="2021-10-21T15:08:20 SGT" duration-ms="54572">
     <groups>
     </groups>
-    <test started-at="2021-10-06T11:04:05 SGT" name="Default test" finished-at="2021-10-06T11:05:00 SGT" duration-ms="54185">
+    <test started-at="2021-10-21T15:07:25 SGT" name="Default test" finished-at="2021-10-21T15:08:20 SGT" duration-ms="54572">
       <class name="lgs.analytics.testcases.ABOAccountDashboardTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@3d1cfad4]" started-at="2021-10-06T11:04:05 SGT" name="setUp" finished-at="2021-10-06T11:04:09 SGT" duration-ms="3323" status="PASS">
+        <test-method is-config="true" signature="setUpExtentReport()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4]" started-at="2021-10-21T15:07:25 SGT" name="setUpExtentReport" finished-at="2021-10-21T15:07:25 SGT" duration-ms="456" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpExtentReport -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4]" started-at="2021-10-21T15:07:25 SGT" name="setUp" finished-at="2021-10-21T15:07:29 SGT" duration-ms="3209" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="ValidateIncomePage()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@3d1cfad4]" started-at="2021-10-06T11:04:09 SGT" name="ValidateIncomePage" finished-at="2021-10-06T11:04:59 SGT" duration-ms="49834" status="PASS">
+        <test-method signature="ValidateIncomePage()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4]" started-at="2021-10-21T15:07:29 SGT" name="ValidateIncomePage" finished-at="2021-10-21T15:08:19 SGT" duration-ms="49904" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ValidateIncomePage -->
-        <test-method is-config="true" signature="endTest()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@3d1cfad4]" started-at="2021-10-06T11:04:59 SGT" name="endTest" finished-at="2021-10-06T11:05:00 SGT" duration-ms="965" status="PASS">
+        <test-method is-config="true" signature="endTest(org.testng.ITestResult)[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4]" started-at="2021-10-21T15:08:19 SGT" name="endTest" finished-at="2021-10-21T15:08:20 SGT" duration-ms="1422" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=ValidateIncomePage status=SUCCESS method=ABOAccountDashboardTest.ValidateIncomePage()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4] output={null}]]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:lgs.analytics.testcases.ABOAccountDashboardTest@1b1426f4]" started-at="2021-10-21T15:08:20 SGT" name="tearDown" finished-at="2021-10-21T15:08:20 SGT" duration-ms="442" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
       </class> <!-- lgs.analytics.testcases.ABOAccountDashboardTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

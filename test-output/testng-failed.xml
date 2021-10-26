@@ -6,7 +6,9 @@
       <class name="lgs.analytics.testcases.ABOAccountDashboardTest">
         <methods>
           <include name="ValidateIncomePage"/>
+          <include name="tearDown"/>
           <include name="endTest"/>
+          <include name="setUpExtentReport"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- lgs.analytics.testcases.ABOAccountDashboardTest -->
