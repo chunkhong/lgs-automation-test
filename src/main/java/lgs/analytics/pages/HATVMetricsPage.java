@@ -19,6 +19,12 @@ public class HATVMetricsPage extends TestBase{
 	@FindBy(css="div[aria-label=\"PF 2021\"]")
 	WebElement Yr2021Option;
 	
+	@FindBy(css="div[title=\"Qualified Months\"]")
+	WebElement qualifiedMonthsTitle;
+	
+	@FindBy(css="div[tab-order=\"108000\"] .bodyCells div div div")
+	WebElement qualifiedMonthsValue;
+	
 	@FindBy(css="div[title=\"Volume Fluctuation\"]")
 	WebElement volumeFlucTitle;
 	
@@ -54,6 +60,14 @@ public class HATVMetricsPage extends TestBase{
 		    a.moveToElement(volumeFlucChart);
 		    a.perform();
 		}
+	}
+	
+	public Boolean qualifiedMonthsTitleDisplay() {
+		return qualifiedMonthsTitle.isDisplayed();
+	}
+	
+	public String qualifiedMonthsValue() {
+		return qualifiedMonthsValue.getText();
 	}
 	
 	public Boolean volumeFlucTitleDisplay() {
