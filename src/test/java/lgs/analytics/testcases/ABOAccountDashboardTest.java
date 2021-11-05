@@ -1,5 +1,11 @@
 package lgs.analytics.testcases;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -10,6 +16,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
@@ -44,31 +51,57 @@ public class ABOAccountDashboardTest extends TestBase{
 		super();
 	}
 	
-	public boolean ABO_Counts_KPIs_Display() {
+	public void statusCheck(boolean status, ExtentTest testName, String expectedValue, String actualValue) throws Exception {
+		if (status == false) {
+			testName.fail(expectedValue + " Not Found !!! Actual value found = " +  actualValue,MediaEntityBuilder.createScreenCaptureFromPath(getScreenshotPath(expectedValue)).build());
+			Assert.assertTrue(status);
+		}else {
+			testName.pass(expectedValue + " test passed.");
+		}
+	}
+	
+	public String getScreenshotPath(String testName) throws IOException {
+		File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		String loc = "/Screenshots/" + testName.replaceAll("\\s+", "") + ".png";
+		//String path = System.getProperty("user.dir")+"/Screenshots/" + testName.replaceAll("\\s+", "") + ".png";
+		String path = System.getProperty("user.dir")+ loc.replaceAll("'",""); //"/Screenshots/groupsize.png";
+		FileUtils.copyFile(source, new File(path));
+		return path;
+	}
+
+	public boolean ABO_Counts_KPIs_Display() throws Exception {
 		status = asserts.TextEqual(accSnapshotPage.getABOCountTitle(), "ABO Counts");
-		if (status == false) {
-			test2.fail("ABO Count Page title Not Found !!!");
-			Assert.assertTrue(status);
-		}
-		status = asserts.TextEqual(accSnapshotPage.getGroupSizeTitle(), "Group Size");
-		if (status == false) {
-			test2.fail("Group Size header Not Found !!!");
-			Assert.assertTrue(status);
-		}
-		Assert.assertTrue(accSnapshotPage.getGroupSizeAmount().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getGroupSizePerct().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getSponsoringTitle().contains("Sponsoring"));
-		Assert.assertTrue(accSnapshotPage.getSponsoringAmount().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getSponsoringPerct().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getContABOPerctTitle().contains("Contributing ABO Percentage"));
-		Assert.assertTrue(accSnapshotPage.getContABOPerctValue().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getContABOPerctPerct().length() > 0);
-		Assert.assertTrue(accSnapshotPage.get90DaysActivTitle().contains("90 Day Activation"));
-		Assert.assertTrue(accSnapshotPage.get90DaysActiveValue().length() > 0);
-		Assert.assertTrue(accSnapshotPage.get90DaysActivePerct().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getPlatinumAndAboveTitle().contains("Platinum and Above Count"));
-		Assert.assertTrue(accSnapshotPage.getPlatinumAndAboveValue().length() > 0);
-		Assert.assertTrue(accSnapshotPage.getPlatinumAndAbovePerct().length() > 0);
+		statusCheck(status, test2, "'ABO Counts Page Title'", accSnapshotPage.getABOCountTitle());
+		status = asserts.TextEqual(accSnapshotPage.getGroupSizeTitle(), "-");
+		statusCheck(status, test2, "'Group Size Header'", accSnapshotPage.getGroupSizeTitle());
+		status = asserts.AnyText(accSnapshotPage.getGroupSizeAmount());
+		statusCheck(status, test2, "'Group Size Amount'", accSnapshotPage.getGroupSizeAmount());
+		status = asserts.AnyText(accSnapshotPage.getGroupSalesPVPerct());
+		statusCheck(status, test2, "'Group Size Percentage'", accSnapshotPage.getGroupSizePerct());
+		status = asserts.TextEqual(accSnapshotPage.getSponsoringTitle(), "Sponsoring");
+		statusCheck(status, test2, "'Sponsoring Header'",accSnapshotPage.getSponsoringTitle());
+		status = asserts.AnyText(accSnapshotPage.getSponsoringAmount());
+		statusCheck(status, test2, "'Sponsoring Amount'", accSnapshotPage.getSponsoringAmount());
+		status = asserts.AnyText(accSnapshotPage.getSponsoringPerct());
+		statusCheck(status, test2, "'Sponsoring Percentage'", accSnapshotPage.getSponsoringPerct());
+		status = asserts.TextEqual(accSnapshotPage.getContABOPerctTitle(), "Contributing ABO Percentage");
+		statusCheck(status, test2, "'Contributing ABO Percentage Header'",accSnapshotPage.getContABOPerctTitle());
+		status = asserts.AnyText(accSnapshotPage.getContABOPerctValue());
+		statusCheck(status, test2, "'Contributing ABO Percentage'", accSnapshotPage.getContABOPerctValue());
+		status = asserts.AnyText(accSnapshotPage.getContABOPerctPerct());
+		statusCheck(status, test2, "'Contributing ABO PY Percentage'", accSnapshotPage.getContABOPerctPerct());
+		status = asserts.TextEqual(accSnapshotPage.get90DaysActivTitle(), "90 Day Activation");
+		statusCheck(status, test2, "'90 Day Activation Header'", accSnapshotPage.get90DaysActivTitle());
+		status = asserts.AnyText(accSnapshotPage.get90DaysActiveValue());
+		statusCheck(status, test2, "'90 Day Activation Percentage'", accSnapshotPage.get90DaysActiveValue());
+		status = asserts.AnyText(accSnapshotPage.get90DaysActivePerct());
+		statusCheck(status, test2, "'90 Day Activation PY Percentage'", accSnapshotPage.get90DaysActivePerct());
+		status = asserts.TextEqual(accSnapshotPage.getPlatinumAndAboveTitle(), "Platinum and Above Count");
+		statusCheck(status, test2, "'Platinum and Above Count Header'", accSnapshotPage.getPlatinumAndAboveTitle());
+		status = asserts.AnyText(accSnapshotPage.getPlatinumAndAboveValue());
+		statusCheck(status, test2, "'Platinum and Above Count'", accSnapshotPage.getPlatinumAndAboveValue());
+		status = asserts.AnyText(accSnapshotPage.getPlatinumAndAbovePerct());
+		statusCheck(status, test2, "'Platinum and Above Count Percentage'", accSnapshotPage.getPlatinumAndAbovePerct());
 		return status;
 	}
 	
@@ -122,7 +155,7 @@ public class ABOAccountDashboardTest extends TestBase{
 	}
 	
 	@Test
-	public void ABO_AccountDashboard_KPIs_Display () throws InterruptedException {
+	public void ABO_AccountDashboard_KPIs_Display () throws Exception {
 		//creates a toggle for the given test, add all log events under it
 		test2 = extent.createTest("Account Dashboard Test", "test to validate account snapshot page");
 		test2.log(Status.INFO, "Starting test case");
@@ -130,10 +163,10 @@ public class ABOAccountDashboardTest extends TestBase{
 		homePage.loginPBI();
 		analyticsHomePage.clickprodImage();
 		status = asserts.TextEqual(analyticsHomePage.getPageheader(), "Sales Support@CMP");
-		test2.pass("Home Page Header Test Successfully");
+		statusCheck(status, test2, "'Sales Support@CMP Header'", analyticsHomePage.getPageheader());
 		Thread.sleep(15000);
 		status = asserts.TextEqual(accSnapshotPage.getPageHeader(), "Account Snapshot");
-		test2.pass("Account Snapshot Header Test Successfully");
+		statusCheck(status, test2, "'Account Snapshot Header'", accSnapshotPage.getPageHeader());
 		filtersPane.clickAccSnapshot_Aff_Id_Filter();
 		Thread.sleep(2000);
 		filtersPane.clickFilterType();
@@ -144,7 +177,6 @@ public class ABOAccountDashboardTest extends TestBase{
 		filtersPane.clickApplyFilterBtn();
 		Thread.sleep(5000);
 		status = ABO_Counts_KPIs_Display();
-		test2.pass("ABO Count KPIs Test Successfully");
 		Productivity_KPIs_Display();
 		Renewal_Rates_KPIs_Display();
 		test2.pass("Account Snapshot Page Test Successfully");

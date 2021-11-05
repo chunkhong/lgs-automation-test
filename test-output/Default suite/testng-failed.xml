@@ -5,7 +5,7 @@
     <classes>
       <class name="lgs.analytics.testcases.ABOAccountDashboardTest">
         <methods>
-          <include name="ValidateIncomePage"/>
+          <include name="ABO_AccountDashboard_KPIs_Display"/>
           <include name="tearDown"/>
           <include name="endTest"/>
           <include name="setUpExtentReport"/>
