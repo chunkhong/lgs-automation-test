@@ -27,4 +27,14 @@ public class Asserts extends TestBase{
 		} 
 		return status;
 	}
+	
+	public Boolean AnyText(String actualText) {
+		boolean status;
+		status = false;
+		
+		if (actualText.length() > 0){
+			status = true;
+		} 
+		return status;
+	}
 }
